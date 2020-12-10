@@ -1,16 +1,18 @@
+// ============================================================================
+
 // Load '.env' only in Development environment:
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config({ path: "./.env" });
 }
 
 // ============================================================================
-
+// ===========<<< Configure Port and Dependencies >>>==========================
+// ============================================================================
 const port = process.env.PORT || 8000;
 const express = require("express");
 const app = express();
 const expressLayouts = require("express-ejs-layouts");
-
-// Link application to routes in 'routes/index.js':
+const mongoose = require("mongoose");
 const indexRouter = require("./routes/index");
 
 // ============================================================================
@@ -30,20 +32,30 @@ app.use(expressLayouts);
 // ===========<<< Configure MongoDB  >>>=======================================
 // ============================================================================
 
-const mongoose = require("mongoose");
 mongoose.connect(process.env.CYCLOAPP_DB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+
 const db = mongoose.connection;
 
 db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("Connected to MongoDB"));
 
-// Use linked 'routes/index.js' routes in application:
+// ============================================================================
+// ===========<<< Configure Routes  >>>========================================
+// ============================================================================
+
+// Link to 'routes/index.js' routes:
 app.use("/", indexRouter);
 
-// Set up Server and Listening Port:
+// ============================================================================
+// ===========<<< SetUp Server  >>>===========================================
+// ============================================================================
+
+// Setup Server and Listening Port:
 app.listen(port, () => {
   console.log(`Listening on Port: ${port}`);
 });
+
+// ============================================================================

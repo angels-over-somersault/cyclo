@@ -1,0 +1,21 @@
+@import 'shared/navbar.css';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+}
+
+.landing {
+    /* Keep bike image in the center as width resizes */
+    height: 100vh;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-image: url(../img/bg1.jpg);
+}
+
+
